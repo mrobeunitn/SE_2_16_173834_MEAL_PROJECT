@@ -4,7 +4,7 @@ var express = require('express');
 var util = require('util');
 var bind = require('bind');
 var path  = require('path');
-var postgresdb = require('pg');
+var database = require('./servercomponents/database.js');
 //instantiate express
 var app = express();
 //POST
@@ -20,6 +20,7 @@ app.use('/static', express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(request, response) 
 {
+    database.connect();
     bind.toFile('index.tpl', 
 	{
         
