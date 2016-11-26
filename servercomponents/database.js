@@ -9,19 +9,28 @@ exports.connect = pg.connect(conString, function(err, client, done) {
   if (err) {
     return console.error('error fetching client from pool', err);
   }
- // client.query('SELECT $1::int AS number', ['1'], function(err, result) {
+    init(client);
     done();
     if (err) {
       return console.error('error running query', err);
     }
   });
 
-//result.rows[0].number
 
-/*const connectionString = process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5433/MealProject';
 
-const client = new pg.Client(connectionString);
-exports.connect = client.connect();
-const query = client.query(
-  'CREATE TABLE items(id SERIAL PRIMARY KEY, text VARCHAR(40) not null, complete BOOLEAN)');
-query.on('end', () => { client.end(); });*/
+//funziIone per inizializzare il database 
+
+function init(client){
+    var query = "CREATE TABLE IF NOT EXISTS Users(name VARCHAR(255) NOT NULL,surname VARCHAR(255) NOT NULL,address VARCHAR(255) NOT NULL, passwOrd VARCHAR(255) NOT NULL,bdate DATE NOT NULL);";
+    
+    client.query(query);
+    
+    query = "INSERT INTO Users VALUES('marco','roberti','Vicolo Grilli 2 Isorella','marco.roberti','16-09-1995');";
+    
+    client.query(query);
+    
+    console.log("rip");
+}
+
+
+//CREATE DATABASE IF NOT EXISTS MealProject;
